@@ -7,4 +7,6 @@
     <color name="hitam">#000000</color>
     <color name="mocca">#FFE4B5</color>
     <color name="putih">#ffffff</color>
+    <color name="darkOrange">#FF8C00</color>
+    <color name="aliceBlue">#F0F8FF</color>
 </resources>
