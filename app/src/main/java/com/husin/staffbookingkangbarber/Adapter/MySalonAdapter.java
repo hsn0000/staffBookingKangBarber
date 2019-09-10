@@ -1,27 +1,40 @@
 package com.husin.staffbookingkangbarber.Adapter;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.husin.staffbookingkangbarber.Common.Common;
+import com.husin.staffbookingkangbarber.Common.CustomLoginDialog;
+import com.husin.staffbookingkangbarber.Interface.IDialogClickListener;
 import com.husin.staffbookingkangbarber.Interface.IRecyclerItemSelectedListener;
 import com.husin.staffbookingkangbarber.Model.Salon;
 import com.husin.staffbookingkangbarber.R;
+import com.husin.staffbookingkangbarber.StaffHomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySalonAdapter extends RecyclerView.Adapter<MySalonAdapter.MyViewHolder> {
+import dmax.dialog.SpotsDialog;
+
+public class MySalonAdapter extends RecyclerView.Adapter<MySalonAdapter.MyViewHolder> implements IDialogClickListener {
 
     Context context;
     List<Salon>salonList;
@@ -54,29 +67,87 @@ public class MySalonAdapter extends RecyclerView.Adapter<MySalonAdapter.MyViewHo
 
         myViewHolder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
             @Override
-            public void onItemSelectedListener(View view, int pos) {
-                // set background putih untuk semua card
-                for (CardView cardView:cardViewList)
-                    cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
+            public void onItemSelected(View view, int posision) {
 
-                // set backgroung saat memilih item
-                myViewHolder.card_salon.setCardBackgroundColor(context.getResources()
-                        .getColor(android.R.color.holo_orange_dark));
-
-                //kirim broadcast ke booking activity tombol enable next
-                Intent intent = new Intent(Common.KEY_ENABLE_BUTTON_NEXT);
-                intent.putExtra(Common.KEY_SALON_STORE,salonList.get(pos));
-                intent.putExtra(Common.KEY_STEP,1);
-                localBroadcastManager.sendBroadcast(intent);
-
+                Common.selectedSalon = salonList.get(posision);
+               showLoginDialog();
             }
         });
+
+    }
+
+    private void showLoginDialog() {
+        CustomLoginDialog.getInstance()
+                .showLoginDialog("STAFF LOGIN",
+                        "LOGIN",
+                        "BATAL",
+                        context,this);
 
     }
 
     @Override
     public int getItemCount() {
         return salonList.size();
+    }
+
+    @Override
+    public void onClickPositiveButton(DialogInterface dialogInterface, String username, String password) {
+        // show loading dialog
+        AlertDialog loading = new SpotsDialog.Builder().setCancelable(false)
+                .setContext(context).build();
+
+        loading.show();
+
+       // /AllSalon/Bogor/Branch/0N1OCqVh6YJ2hB5Ke97h/Barber/HyM6cZg1jfeP7wOW0AsS
+        FirebaseFirestore.getInstance()
+                .collection("AllSalon")
+                .document(Common.state_name)
+                .collection("Branch")
+                .document(Common.selectedSalon.getSalonId())
+                .collection("Barber")
+                .whereEqualTo("username",username)
+                .whereEqualTo("password",password)
+                .limit(1)
+                .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context,e.getMessage(), Toast.LENGTH_SHORT).show();
+                        loading.dismiss();
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                           if (task.getResult().size() > 0)
+                           {
+                              dialogInterface.dismiss();
+
+                              loading.dismiss();
+
+                              // navigasi staff
+                               Intent stafHome = new Intent(context, StaffHomeActivity.class);
+                               stafHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                               stafHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                               context.startActivity(stafHome);
+                           }
+                           else
+                           {
+                               loading.dismiss();
+                               Toast.makeText(context, "Nama pengguna / kata sandi salah, atau salon salah !!", Toast.LENGTH_SHORT).show();
+                           }
+                        }
+                    }
+                });
+
+    }
+
+    @Override
+    public void onClickNegativeButton(DialogInterface dialogInterface) {
+        dialogInterface.dismiss();
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -101,7 +172,7 @@ public class MySalonAdapter extends RecyclerView.Adapter<MySalonAdapter.MyViewHo
 
         @Override
         public void onClick(View view) {
-            iRecyclerItemSelectedListener.onItemSelectedListener(view,getAdapterPosition());
+            iRecyclerItemSelectedListener.onItemSelected(view,getAdapterPosition());
 
         }
     }

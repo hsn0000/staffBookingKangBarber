@@ -14,16 +14,16 @@
 
         <TextView
             android:id="@+id/txt_title"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:background="@color/mocca"
-            android:textColor="@drawable/logobkb1white"
-            android:padding="10dp"
             android:text="STAFF LOGIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/hitam"
+            android:textColor="@color/putih"
+            android:padding="10dp"
             android:fontFamily="@font/bellerose"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_centerHorizontal="true" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_user"

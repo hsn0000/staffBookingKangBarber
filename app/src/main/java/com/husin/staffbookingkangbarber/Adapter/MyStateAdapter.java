@@ -52,7 +52,7 @@ public class MyStateAdapter extends RecyclerView.Adapter<MyStateAdapter.MyViewHo
 
          myViewHolder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
              @Override
-             public void onItemSelectedListener(View view, int posision) {
+             public void onItemSelected(View view, int posision) {
                  Common.state_name = cityList.get(i).getName();
                  context.startActivity(new Intent(context, SalonListActivity.class));
              }
@@ -94,7 +94,7 @@ public class MyStateAdapter extends RecyclerView.Adapter<MyStateAdapter.MyViewHo
 
         @Override
         public void onClick(View view) {
-            iRecyclerItemSelectedListener.onItemSelectedListener(view,getAdapterPosition());
+            iRecyclerItemSelectedListener.onItemSelected(view,getAdapterPosition());
         }
     }
 }

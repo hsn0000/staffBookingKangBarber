@@ -1,5 +1,7 @@
 package com.husin.staffbookingkangbarber.Common;
 
+import com.husin.staffbookingkangbarber.Model.Salon;
+
 public class Common {
     public static final String KEY_ENABLE_BUTTON_NEXT = "ENABLE_BUTTON_NEXT";
     public static final String KEY_SALON_STORE = "SALON_SAVE";
@@ -7,4 +9,5 @@ public class Common {
 
 
     public static String state_name="";
+    public static Salon selectedSalon;
 }
