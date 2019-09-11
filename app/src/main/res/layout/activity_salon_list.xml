@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/rounded_dialog"
+    android:background="@color/aliceBlue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SalonListActivity">
@@ -13,9 +13,9 @@
         android:text="Semua Sallon (0)"
         android:textSize="22sp"
         android:padding="8dp"
-        android:textColor="@color/putih"
-        android:fontFamily="@font/roboto_light"
-        android:background="@color/hitam"
+        android:textColor="@color/hitam"
+        android:fontFamily="@font/bellerose"
+        android:background="@color/aliceBlue"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

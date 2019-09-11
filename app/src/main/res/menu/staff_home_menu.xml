@@ -2,7 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="action_new_notification"
+    <item android:id="@+id/action_new_notification"
         android:icon="@drawable/ic_event_note_black_24dp"
         android:title="Notifikasi"
         app:showAsAction="always"
