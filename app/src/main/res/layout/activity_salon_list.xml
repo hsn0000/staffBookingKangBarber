@@ -13,9 +13,9 @@
         android:text="Semua Sallon (0)"
         android:textSize="22sp"
         android:padding="8dp"
-        android:textColor="@color/putih"
+        android:textColor="@color/hitam"
         android:fontFamily="@font/roboto_light"
-        android:background="@color/hitam"
+        android:background="@color/aliceBlue"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

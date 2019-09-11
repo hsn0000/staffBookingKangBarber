@@ -16,11 +16,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.husin.staffbookingkangbarber.Adapter.MySalonAdapter;
 import com.husin.staffbookingkangbarber.Common.Common;
 import com.husin.staffbookingkangbarber.Common.SpacesItemDecoration;
 import com.husin.staffbookingkangbarber.Interface.IBranchLoadListener;
+import com.husin.staffbookingkangbarber.Interface.IGetBarberListener;
 import com.husin.staffbookingkangbarber.Interface.IOnLoadCountSalon;
+import com.husin.staffbookingkangbarber.Interface.IUserLoginRememberListener;
+import com.husin.staffbookingkangbarber.Model.Barber;
 import com.husin.staffbookingkangbarber.Model.Salon;
 
 import java.util.ArrayList;
@@ -29,8 +33,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
+import io.paperdb.Paper;
 
-public class SalonListActivity extends AppCompatActivity implements IOnLoadCountSalon, IBranchLoadListener {
+public class SalonListActivity extends AppCompatActivity implements IOnLoadCountSalon, IBranchLoadListener, IGetBarberListener, IUserLoginRememberListener {
 
     @BindView(R.id.txt_salon_count)
     TextView txt_salon_count;
@@ -113,7 +118,7 @@ public class SalonListActivity extends AppCompatActivity implements IOnLoadCount
 
     @Override
     public void onBranchLoadSuccess(List<Salon> brancList) {
-        MySalonAdapter salonAdapter = new MySalonAdapter(this,brancList);
+        MySalonAdapter salonAdapter = new MySalonAdapter(this,brancList,this,this);
         recycler_salon.setAdapter(salonAdapter);
 
         dialog.dismiss();
@@ -123,5 +128,21 @@ public class SalonListActivity extends AppCompatActivity implements IOnLoadCount
     public void onBranchLoadFailed(String message) {
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
         dialog.dismiss();
+    }
+
+    @Override
+    public void onGetBarberSuccess(Barber barber) {
+        Common.currentBarber = barber;
+        Paper.book().write(Common.BARBER_KEY,new Gson().toJson(barber));
+
+    }
+
+    @Override
+    public void onUserLoginSuccess(String user) {
+        // save user
+        Paper.init(this);
+        Paper.book().write(Common.LOGGED_KEY,user);
+        Paper.book().write(Common.STATE_KEY,Common.state_name);
+        Paper.book().write(Common.SALON_KEY,new Gson().toJson(Common.selected_salon));
     }
 }

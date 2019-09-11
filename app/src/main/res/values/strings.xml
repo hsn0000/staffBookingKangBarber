@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">staffBookingKangBarber</string>
+    <string name="open">Buka</string>
+    <string name="close">Tutup</string>
 </resources>

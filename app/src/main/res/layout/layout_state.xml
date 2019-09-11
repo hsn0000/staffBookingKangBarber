@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:background="@color/aliceBlue"
+        android:background="@color/putih"
         android:orientation="vertical"
         android:padding="18dp"
         android:layout_margin="2dp"
