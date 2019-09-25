@@ -18,6 +18,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.husin.staffbookingkangbarber.Adapter.MyStateAdapter;
@@ -37,6 +39,8 @@ import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 
+import static android.util.Log.d;
+
 public class MainActivity extends AppCompatActivity implements IOnAllStateLoadListener {
 
     @BindView(R.id.recycler_state)
@@ -53,6 +57,27 @@ public class MainActivity extends AppCompatActivity implements IOnAllStateLoadLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful())
+                        {
+                           Common.updateToken(MainActivity.this,
+                                   task.getResult().getToken());
+                           Log:d("EDMTTOKEN",task.getResult().getToken());
+                        }
+                    }
+                });
+
 
         Paper.init(this);
         String user = Paper.book().read(Common.LOGGED_KEY);

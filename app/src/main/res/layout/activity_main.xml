@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_dialog"
+    android:background="@color/putih"
     tools:context=".MainActivity">
 
     <ImageView
@@ -18,7 +18,7 @@
         android:layout_marginStart="22dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="24dp"
-        android:src="@drawable/logoban" />
+        android:src="@drawable/logo1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_state"

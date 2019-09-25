@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/mocca"
     android:id="@+id/card_salon"
     app:cardCornerRadius="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:background="@color/putih"
+        android:background="@color/mocca"
         android:orientation="vertical"
         android:padding="18dp"
         android:layout_margin="2dp"
