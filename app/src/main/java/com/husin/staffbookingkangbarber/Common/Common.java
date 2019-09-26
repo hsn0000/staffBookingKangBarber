@@ -41,6 +41,7 @@ public class Common {
     public static final String BARBER_KEY = "BARBER";
     public static final String TITLE_KEY =  "title";
     public static final String CONTENT_KEY = "content";
+    public static final int MAX_NOTIFICATION_PER_LOAD = 10;
 
 
     public static String state_name="";
@@ -116,7 +117,7 @@ public class Common {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                    "EDMT Barber Booking staff App", NotificationManager.IMPORTANCE_DEFAULT);
+                    "Staff Booking Kang Barber", NotificationManager.IMPORTANCE_DEFAULT);
 
             notificationChannel.setDescription("Staff app");
             notificationChannel.enableLights(true);
@@ -156,12 +157,13 @@ public class Common {
         String user = Paper.book().read(Common.LOGGED_KEY);
         if (user !=null)
         {
-            if (TextUtils.isEmpty(user))
+            if (!
+                    TextUtils.isEmpty(user))
             {
                 MyToken myToken = new MyToken();
                 myToken.setToken(token);
                 myToken.setTokenType(TOKEN_TYPE.BARBER); // run from barber staf
-                myToken.setUser(user);
+                myToken.setUserPhone(user);
 
 //                submit on firebase
                 FirebaseFirestore.getInstance()

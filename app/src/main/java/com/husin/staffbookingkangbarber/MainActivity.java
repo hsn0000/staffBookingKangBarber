@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements IOnAllStateLoadLi
                         {
                            Common.updateToken(MainActivity.this,
                                    task.getResult().getToken());
-                           Log:d("EDMTTOKEN",task.getResult().getToken());
+                           Log:d("EDMTToken",task.getResult().getToken());
                         }
                     }
                 });

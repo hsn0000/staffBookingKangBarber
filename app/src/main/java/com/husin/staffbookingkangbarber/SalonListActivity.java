@@ -110,7 +110,7 @@ public class SalonListActivity extends AppCompatActivity implements IOnLoadCount
 
     @Override
     public void onLoadCountSalonSuccess(int count) {
-        txt_salon_count.setText(new StringBuilder("All Salon (")
+        txt_salon_count.setText(new StringBuilder("AllSalon (")
         .append(count)
         .append(")"));
 
