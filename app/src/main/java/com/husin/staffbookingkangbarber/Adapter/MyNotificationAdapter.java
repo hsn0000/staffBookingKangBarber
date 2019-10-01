@@ -54,7 +54,7 @@ public class MyNotificationAdapter extends RecyclerView.Adapter<MyNotificationAd
         diffResult.dispatchUpdatesTo(this);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
         @BindView(R.id.txt_notification_title)
         TextView txt_notification_title;
         @BindView(R.id.txt_notification_content)

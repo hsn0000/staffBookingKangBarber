@@ -38,8 +38,8 @@ public class NotificationActifity extends AppCompatActivity implements INotifica
     INotificationLoadListener iNotificationLoadListener;
 
     int total_item =0,last_visible_item;
-    boolean isLoading=false, isMaxData=false;
-    DocumentSnapshot finaltDoc;
+    boolean isLoading=false,isMaxData=false;
+    DocumentSnapshot finalDoc;
     MyNotificationAdapter adapter;
     List<MyNotification> firstList = new ArrayList<>();
 
@@ -52,6 +52,7 @@ public class NotificationActifity extends AppCompatActivity implements INotifica
 
         init();
         initView();
+
         loadNotification(null);
 
     }
@@ -72,7 +73,7 @@ public class NotificationActifity extends AppCompatActivity implements INotifica
                 if (!isLoading &&
                     total_item <= (last_visible_item + Common.MAX_NOTIFICATION_PER_LOAD))
                 {
-                    loadNotification(finaltDoc);
+                    loadNotification(finalDoc);
                     isLoading = true;
                 }
 
@@ -106,7 +107,7 @@ public class NotificationActifity extends AppCompatActivity implements INotifica
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful())
+                            if(task.isSuccessful())
                             {
                                 List<MyNotification> myNotifications = new ArrayList<>();
                                 DocumentSnapshot finalDoc = null;
@@ -171,11 +172,11 @@ public class NotificationActifity extends AppCompatActivity implements INotifica
     public void onNotificationLoadSuccess(List<MyNotification> myNotificationList, DocumentSnapshot lastDocument) {
         if (lastDocument != null)
         {
-            if (lastDocument.equals(finaltDoc))
+            if (lastDocument.equals(finalDoc))
                 isMaxData=true;
             else
             {
-                finaltDoc = lastDocument;
+                finalDoc = lastDocument;
                 isMaxData = false;
             }
 

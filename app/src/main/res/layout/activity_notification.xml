@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/putih"
     tools:context=".NotificationActifity">
 
 
@@ -16,7 +16,7 @@
         android:padding="8dp"
         android:textColor="@android:color/black"
          android:fontFamily="@font/roboto_light"
-        android:background="@color/colorBackground"
+        android:background="@color/putih"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

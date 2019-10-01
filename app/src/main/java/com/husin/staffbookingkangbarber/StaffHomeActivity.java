@@ -104,7 +104,7 @@ public class StaffHomeActivity extends AppCompatActivity implements ITimeSlotLoa
         if (item.getItemId() == R.id.action_new_notification)
         {
             startActivity(new Intent(StaffHomeActivity.this,NotificationActifity.class));
-            txt_notification_badge.setText(" ");
+            txt_notification_badge.setText("");
            return true;
         }
 
